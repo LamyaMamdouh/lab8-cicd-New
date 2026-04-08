@@ -10,4 +10,5 @@ INSERT INTO tasks VALUES
   (2, 'Eggs', 'done'),
   (3, 'Bread', 'pending'),
   (4, 'Butter', 'pending'),
-  (5, 'Orange juice', 'pending');
+  (5, 'Orange juice', 'pending'),
+  (6, 'Tea', 'pending');
