@@ -10,14 +10,23 @@ let db;
 async function connectDB() {
   const url = process.env.DATABASE_URL;
   const match = url.match(/mysql:\/\/(\w+):(\w+)@([\w.-]+):(\d+)\/(\w+)/);
-  db = await mysql.createConnection({
-    host: match[3],
-    user: match[1],
-    password: match[2],
-    port: match[4],
-    database: match[5],
-  });
-  console.log('Connected to MySQL');
+  
+  while (true) {
+    try {
+      db = await mysql.createConnection({
+        host: match[3],
+        user: match[1],
+        password: match[2],
+        port: parseInt(match[4]),
+        database: match[5],
+      });
+      console.log('Connected to MySQL');
+      return;
+    } catch (err) {
+      console.log('Waiting for DB...', err.message);
+      await new Promise(r => setTimeout(r, 3000));
+    }
+  }
 }
 
 app.get('/', (req, res) => {
